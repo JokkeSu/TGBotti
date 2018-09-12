@@ -1,1 +1,1 @@
-web: python TGBOT2.py
+worker: python TGBOT2.py
