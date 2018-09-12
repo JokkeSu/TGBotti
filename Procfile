@@ -1,1 +1,1 @@
-web: python TGBOT2.py $PORT
+web: python TGBOT2.py
