@@ -2,7 +2,7 @@
 from telegram.ext import Updater,CommandHandler, MessageHandler, Filters, logging
 
 #Token on viittaus TG:n palvelimelle. Sitä seurataan.
-updater = Updater(token='627376930:AAHEuPiL83S-o-czCFpMk6lNHye0wZVm7xU')
+updater = Updater(token='TOKEN')
 dispatcher = updater.dispatcher
 
 #Joku loki virheenjäljitystä varten.
