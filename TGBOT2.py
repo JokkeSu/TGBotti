@@ -81,9 +81,6 @@ def main():
                 today += 1
 
             new_offset = last_update_id + 1
-        
-        if len(last_update) == 0:
-            new_offset = None
 
 
 if __name__ == '__main__':
