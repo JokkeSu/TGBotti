@@ -74,7 +74,7 @@ def main():
             else:
                 greet_bot.send_message(last_chat_id, 'Öitä {} {}'.format(last_chat_name, last_update))
 
-        new_offset = last_update_id + 1
+            new_offset = last_update_id + 1
 
 
 if __name__ == '__main__':
