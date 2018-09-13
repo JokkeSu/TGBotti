@@ -75,9 +75,9 @@ def main():
                 greet_bot.send_message(last_chat_id, 'Öitä {}'.format(last_chat_name))
                 today += 1
 
-            elif last_chat_text.lower() in greetings:
-                greet_bot.send_message(last_chat_id, '{}'.format(last_chat_text))
-#                greet_bot.send_message(last_chat_id, '{} {} {}'.format(last_chat_text, last_chat_name, last_update))
+            else:
+ #               greet_bot.send_message(last_chat_id, '{}'.format(last_chat_text))
+                greet_bot.send_message(last_chat_id, '{} {} {}'.format(last_chat_text, last_chat_name, last_update))
                 today += 1
 
             new_offset = last_update_id + 1
