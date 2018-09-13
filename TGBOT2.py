@@ -75,7 +75,7 @@ def main():
                 greet_bot.send_message(last_chat_id, 'Öitä {}'.format(last_chat_name))
                 today += 1
 
-            elif last_chat_text-lower() in greetings:
+            elif last_chat_text.lower() in greetings:
                 greet_bot.send_message(last_chat_id, '{} {} {}'.format(last_chat_text, last_chat_name, last_update))
                 today += 1
 
