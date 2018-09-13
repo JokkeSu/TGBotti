@@ -53,7 +53,7 @@ def main():
 
         last_update = greet_bot.get_last_update()
        
-        if len(get_result) > 0:
+        if len(last_update) > 0:
             last_update_id = last_update['update_id']
             last_chat_text = last_update['message']['text']
             last_chat_id = last_update['message']['chat']['id']
