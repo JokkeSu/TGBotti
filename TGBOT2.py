@@ -70,13 +70,15 @@ def main():
             elif last_chat_text.lower() in greetings and today == now.day and 17 <= hour < 23:
                 greet_bot.send_message(last_chat_id, 'Iltaa {}'.format(last_chat_name))
                 today += 1
-
-            else:
-                greet_bot.send_message(last_chat_id, 'Öitä {} {}'.format(last_chat_name, last_update))
+                
+            elif last_chat_text.lower() in greetings and today == now.day and ((23 <= hour < 24) or (0 <= hour < 6)):
+                greet_bot.send_message(last_chat_id, 'Öitä {}'.format(last_chat_name))
                 today += 1
 
-            new_offset = last_update_id + 1
-        else:
+            elif last_chat_text.lower() in greetings:
+                greet_bot.send_message(last_chat_id, '{} {} {}'.format(last_chat_text, last_chat_name, last_update))
+                today += 1
+
             new_offset = last_update_id + 1
 
 
