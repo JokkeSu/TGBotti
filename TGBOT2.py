@@ -38,7 +38,7 @@ class BotHandler:
 
 
 greet_bot = BotHandler(token)
-greetings = ['Terve!', 'Hei!', 'Morjens!', 'Moro!']
+greetings = ('Terve!', 'Hei!', 'Morjens!', 'Moro!')
 now = datetime.datetime.now()
 
 
@@ -75,7 +75,7 @@ def main():
                 greet_bot.send_message(last_chat_id, 'Öitä {}'.format(last_chat_name))
                 today += 1
 
-            elif last_chat_text.lower() in greetings:
+            else:
                 greet_bot.send_message(last_chat_id, '{} {} {}'.format(last_chat_text, last_chat_name, last_update))
                 today += 1
 
