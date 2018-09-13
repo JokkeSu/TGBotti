@@ -77,7 +77,7 @@ def main():
 
             new_offset = last_update_id + 1
         else:
-            new:offset = last_update_id + 1
+            new_offset = last_update_id + 1
 
 
 if __name__ == '__main__':
