@@ -38,7 +38,7 @@ class BotHandler:
 
 
 greet_bot = BotHandler(token)
-greetings = ('/terve!', '/hei!', '/morjens!', '/moro!', '/huomenta!', '/päivää!', '/iltaa!', '/hyvää päivää!', '/hei')
+greetings = ('terve!', 'hei!', 'morjens!', 'moro!', 'huomenta!', 'päivää!', 'iltaa!', 'hyvää päivää!', 'hei')
 now = datetime.datetime.now()
 
 
