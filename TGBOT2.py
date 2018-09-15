@@ -16,7 +16,7 @@ class InOut:
 
     def get_updates(self, offset=None, timeout=100):
         method = 'getUpdates'
-        params = {'timeout':timeout, 'offset':offset}
+        params = {'timeout': timeout, 'offset': offset}
         resp = requests.get(self.api_url + method, params)
         print(resp.json())
         result_json = resp.json()['result']
@@ -88,14 +88,13 @@ def main():
                 greet_bot.send_message(last_chat_id, 'Iltaa {}'.format(last_chat_name))
                 
             elif last_chat_text.lower() in greetings and today == now.day and ((23 <= hour < 24) or (0 <= hour < 6)):
-               greet_bot.send_message(last_chat_id, 'Öitä {}'.format(last_chat_name))
+                greet_bot.send_message(last_chat_id, 'Öitä {}'.format(last_chat_name))
 
             if len(last_chat_sticker) > 2:
                 sticker_amount += 1
                 if sticker_amount == 10:
                     greet_bot.send_message(last_chat_id, 'Niin hyviä meemitarroja!')
                     sticker_amount = 0
-
 
         new_offset = last_update_id + 1
 
