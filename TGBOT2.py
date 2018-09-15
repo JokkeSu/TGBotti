@@ -53,17 +53,20 @@ def main():
     today = now.day
     hour = now.hour
     sticker_amount = 0
+    msgtimeold = 0
+    msgpermin = 0
 
     while True:
         greet_bot.get_updates(new_offset)
 
         last_update = greet_bot.get_last_update()
         last_update_id = 0
-       
+
         if len(last_update) > 0:
             last_update_id = last_update['update_id']
             last_chat_id = last_update['message']['chat']['id']
             last_chat_name = last_update['message']['from']['first_name']
+            msgtimenew = last_update['message']['date']
 
             try:
                 last_chat_text = last_update['message']['text']
@@ -89,6 +92,19 @@ def main():
                 
             elif last_chat_text.lower() in greetings and today == now.day and ((23 <= hour < 24) or (0 <= hour < 6)):
                 greet_bot.send_message(last_chat_id, 'Öitä {}'.format(last_chat_name))
+            print(msgtimeold)
+            print(msgtimenew)
+            print (msgpermin)
+
+            if (msgtimenew - msgtimeold) < 30:
+                msgpermin += 1
+                msgtimeold = msgtimenew
+                if msgpermin == 15:
+                    greet_bot.send_message(last_chat_id, 'Rauhoittukaa, herranen aika!')
+                    msgpermin = 0
+            else:
+                msgtimeold = msgtimenew
+                msgpermin = 0
 
             if len(last_chat_sticker) > 2:
                 sticker_amount += 1
