@@ -1,18 +1,24 @@
-﻿import requests
+﻿# Tuodaan tarvittavat osat
 import datetime
+try:
+    import requests
+except ImportError:
+    requests = None
+    print("Ongelma requests-moduulin noudossa.")
 
-token = "627376930:AAHEuPiL83S-o-czCFpMk6lNHye0wZVm7xU"
 
-class BotHandler:
+# InOut hakee päivitykset
+class InOut:
 
     def __init__(self, token):
         self.token = token
         self.api_url = "https://api.telegram.org/bot{}/".format(token)
 
-    def get_updates(self, offset=None, timeout=30):
+    def get_updates(self, offset=None, timeout=100):
         method = 'getUpdates'
         params = {'timeout':timeout, 'offset':offset}
         resp = requests.get(self.api_url + method, params)
+        print(resp.json())
         result_json = resp.json()['result']
         return result_json
 
@@ -32,12 +38,11 @@ class BotHandler:
 
         return last_update
 
-    def get_chat_id(self):
-        chat_id = self.get_last_update()
-        return chat_id
 
+# Token on botin tunnus
+token = "627376930:AAEwMHtPGGcgbxjm6qKN2CVdUUdjVBQYU3Q"
 
-greet_bot = BotHandler(token)
+greet_bot = InOut(token)
 greetings = ('terve!', 'hei!', 'morjens!', 'moro!', 'huomenta!', 'päivää!', 'iltaa!', 'hyvää päivää!', 'hei')
 now = datetime.datetime.now()
 
@@ -47,6 +52,7 @@ def main():
     new_offset = None
     today = now.day
     hour = now.hour
+    sticker_amount = 0
 
     while True:
         greet_bot.get_updates(new_offset)
@@ -55,33 +61,39 @@ def main():
        
         if len(last_update) > 0:
             last_update_id = last_update['update_id']
-            last_chat_text = last_update['message']['text']
             last_chat_id = last_update['message']['chat']['id']
-            last_chat_name = last_update['message']['chat']['first_name']
+            last_chat_name = last_update['message']['from']['first_name']
+
+            try:
+                last_chat_text = last_update['message']['text']
+            except KeyError:
+                last_chat_text = ''
+            try:
+                last_chat_sticker = last_update['message']['sticker']
+            except KeyError:
+                last_chat_sticker = []
+
             
-            if last_chat_text.lower()in greetings:
-                greet_bot.send_message(last_chat_id, 'Huomenta {} {}'.format(last_chat_name, last_update))
-
-#            if last_chat_text.lower() in greetings and today == now.day and 6 <= hour < 12:
+#            if last_chat_text.lower()in greetings:
 #                greet_bot.send_message(last_chat_id, 'Huomenta {}'.format(last_chat_name))
-#                today += 1
 
-#            elif last_chat_text.lower() in greetings and today == now.day and 12 <= hour < 17:
-#                greet_bot.send_message(last_chat_id, 'Iltapäivää {}'.format(last_chat_name))
-#                today += 1
+            if last_chat_text.lower() in greetings and today == now.day and 6 <= hour < 12:
+                greet_bot.send_message(last_chat_id, 'Huomenta {}'.format(last_chat_name))
 
-#            elif last_chat_text.lower() in greetings and today == now.day and 17 <= hour < 23:
-#                greet_bot.send_message(last_chat_id, 'Iltaa {}'.format(last_chat_name))
-#                today += 1
+            elif last_chat_text.lower() in greetings and today == now.day and 12 <= hour < 17:
+                greet_bot.send_message(last_chat_id, 'Iltapäivää {}'.format(last_chat_name))
+
+            elif last_chat_text.lower() in greetings and today == now.day and 17 <= hour < 23:
+                greet_bot.send_message(last_chat_id, 'Iltaa {}'.format(last_chat_name))
                 
-#            elif last_chat_text.lower() in greetings and today == now.day and ((23 <= hour < 24) or (0 <= hour < 6)):
-#               greet_bot.send_message(last_chat_id, 'Öitä {}'.format(last_chat_name))
-#               today += 1
+            elif last_chat_text.lower() in greetings and today == now.day and ((23 <= hour < 24) or (0 <= hour < 6)):
+               greet_bot.send_message(last_chat_id, 'Öitä {}'.format(last_chat_name))
 
-#           else:
-#               greet_bot.send_message(last_chat_id, '{}'.format(last_chat_text))
-#                greet_bot.send_message(last_chat_id, '{} {} {}'.format(last_chat_text, last_chat_name, last_update))
-#                today += 1
+            if len(last_chat_sticker) > 2:
+                sticker_amount += 1
+                if sticker_amount == 10:
+                    greet_bot.send_message(last_chat_id, 'Niin hyviä meemitarroja!')
+                    sticker_amount = 0
 
             new_offset = last_update_id + 1
 
