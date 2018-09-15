@@ -58,6 +58,7 @@ def main():
         greet_bot.get_updates(new_offset)
 
         last_update = greet_bot.get_last_update()
+        last_update_id = 0
        
         if len(last_update) > 0:
             last_update_id = last_update['update_id']
@@ -95,7 +96,8 @@ def main():
                     greet_bot.send_message(last_chat_id, 'Niin hyviä meemitarroja!')
                     sticker_amount = 0
 
-            new_offset = last_update_id + 1
+        new_offset = last_update_id + 1
+
 
 
 if __name__ == '__main__':
