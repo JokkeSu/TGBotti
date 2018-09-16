@@ -43,7 +43,8 @@ class InOut:
 token = "627376930:AAEwMHtPGGcgbxjm6qKN2CVdUUdjVBQYU3Q"
 
 greet_bot = InOut(token)
-greetings = ('terve!', 'hei!', 'morjens!', 'moro!', 'huomenta!', 'päivää!', 'iltaa!', 'hyvää päivää!', 'hei')
+greetings = ('terve!', 'hei!', 'morjens!', 'moro!', 'huomenta!', 'päivää!', 'iltaa!', 'hyvää päivää!', 'hei', 'moi!',
+             'hyvää yötä botti')
 now = datetime.datetime.now()
 
 
@@ -81,13 +82,13 @@ def main():
 #            if last_chat_text.lower()in greetings:
 #                greet_bot.send_message(last_chat_id, 'Huomenta {}'.format(last_chat_name))
 
-            if last_chat_text.lower() in greetings and today == now.day and 6 <= hour < 12:
+            if last_chat_text.lower() in greetings and today == now.day and (6 <= hour < 12):
                 greet_bot.send_message(last_chat_id, 'Huomenta {}'.format(last_chat_name))
 
-            elif last_chat_text.lower() in greetings and today == now.day and 12 <= hour < 17:
+            elif last_chat_text.lower() in greetings and today == now.day and (12 <= hour < 17):
                 greet_bot.send_message(last_chat_id, 'Iltapäivää {}'.format(last_chat_name))
 
-            elif last_chat_text.lower() in greetings and today == now.day and 17 <= hour < 23:
+            elif last_chat_text.lower() in greetings and today == now.day and (17 <= hour < 23):
                 greet_bot.send_message(last_chat_id, 'Iltaa {}'.format(last_chat_name))
                 
             elif last_chat_text.lower() in greetings and today == now.day and ((23 <= hour < 24) or (0 <= hour < 6)):
