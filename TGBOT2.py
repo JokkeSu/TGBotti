@@ -42,7 +42,7 @@ class InOut:
 
 
 # Token on botin tunnus
-s3 = S3Connection(os.environ['token_heroku'])
+s3 = S3Connection(os.environ.get('token_heroku'))
 print(s3)
 token = s3[0]
 
