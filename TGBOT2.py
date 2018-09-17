@@ -6,7 +6,6 @@ try:
 except ImportError:
     requests = None
     print("Ongelma requests-moduulin noudossa.")
-from boto.s3.connection import S3Connection
 
 
 # InOut hakee päivitykset
@@ -42,9 +41,8 @@ class InOut:
 
 
 # Token on botin tunnus
-s3 = S3Connection(os.environ.get('token_heroku'))
-print(s3)
-token = s3[0]
+token = os.environ['token_heroku']
+print(token)
 
 greet_bot = InOut(token)
 greetings = ('terve!', 'hei!', 'morjens!', 'moro!', 'huomenta!', 'päivää!', 'iltaa!', 'hyvää päivää!', 'hei', 'moi!',
