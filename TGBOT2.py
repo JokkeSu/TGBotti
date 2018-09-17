@@ -93,9 +93,11 @@ def main():
                 
             elif last_chat_text.lower() in greetings and today == now.day and ((23 <= hour < 24) or (0 <= hour < 6)):
                 greet_bot.send_message(last_chat_id, 'Öitä {}'.format(last_chat_name))
+            elif last_chat_text.lower() == 'hyvää yötä botti':
+                continue
             print(msgtimeold)
             print(msgtimenew)
-            print (msgpermin)
+            print(msgpermin)
 
             if (msgtimenew - msgtimeold) < 30:
                 msgpermin += 1
