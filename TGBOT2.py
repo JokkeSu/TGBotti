@@ -40,9 +40,8 @@ class InOut:
         return last_update
 
 
-# Token on botin tunnus
+# Token on botin tunnus. Sitä säilytetään Herokussa sovelluksen muuttujana. Noudetaan se.
 token = os.environ['token_heroku']
-print(token)
 
 greet_bot = InOut(token)
 greetings = ('terve!', 'hei!', 'morjens!', 'moro!', 'huomenta!', 'päivää!', 'iltaa!', 'hyvää päivää!', 'hei', 'moi!',
@@ -84,22 +83,19 @@ def main():
 #            if last_chat_text.lower()in greetings:
 #                greet_bot.send_message(last_chat_id, 'Huomenta {}'.format(last_chat_name))
 
-            if last_chat_text.lower() in greetings and today == now.day and (6 <= hour < 12):
+            if last_chat_text.lower() in greetings and today == now.day and (4 <= hour < 10):
                 greet_bot.send_message(last_chat_id, 'Huomenta {}'.format(last_chat_name))
 
-            elif last_chat_text.lower() in greetings and today == now.day and (12 <= hour < 17):
+            elif last_chat_text.lower() in greetings and today == now.day and (10 <= hour < 15):
                 greet_bot.send_message(last_chat_id, 'Iltapäivää {}'.format(last_chat_name))
 
-            elif last_chat_text.lower() in greetings and today == now.day and (17 <= hour < 23):
+            elif last_chat_text.lower() in greetings and today == now.day and (15 <= hour < 21):
                 greet_bot.send_message(last_chat_id, 'Iltaa {}'.format(last_chat_name))
                 
-            elif last_chat_text.lower() in greetings and today == now.day and ((23 <= hour < 24) or (0 <= hour < 6)):
+            elif last_chat_text.lower() in greetings and today == now.day and ((21 <= hour < 24) or (0 <= hour < 4)):
                 greet_bot.send_message(last_chat_id, 'Öitä {}'.format(last_chat_name))
             elif last_chat_text.lower() == 'hyvää yötä botti':
                 continue
-            print(msgtimeold)
-            print(msgtimenew)
-            print(msgpermin)
 
             if (msgtimenew - msgtimeold) < 30:
                 msgpermin += 1
