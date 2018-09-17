@@ -5,7 +5,7 @@ try:
 except ImportError:
     requests = None
     print("Ongelma requests-moduulin noudossa.")
-from boto.s3.connection import S3Connestion
+from boto.s3.connection import S3Connection
 
 
 # InOut hakee päivitykset
@@ -41,7 +41,7 @@ class InOut:
 
 
 # Token on botin tunnus
-s3 = S3Connestion(os.environ['token_heroku'])
+s3 = S3Connection(os.environ['token_heroku'])
 print(s3)
 token = s3[0]
 
