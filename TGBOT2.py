@@ -1,4 +1,5 @@
 ﻿# Tuodaan tarvittavat osat
+import os
 import datetime
 try:
     import requests
