@@ -1,4 +1,4 @@
-﻿# Tuodaan tarvittavat osat
+﻿# Tuodaan tarvittavat osat.
 import os
 import datetime
 try:
@@ -8,7 +8,7 @@ except ImportError:
     print("Ongelma requests-moduulin noudossa.")
 
 
-# InOut hakee päivitykset
+# InOut hakee viestipäivitykset sekä lähettää uudet viestit.
 class InOut:
 
     def __init__(self, token):
@@ -52,13 +52,12 @@ now = datetime.datetime.now()
 def main():
 
     new_offset = None
-    today = now.day
-    hour = now.hour
     sticker_amount = 0
     msgtimeold = 0
     msgpermin = 0
 
     while True:
+        hour = now.hour
         greet_bot.get_updates(new_offset)
 
         last_update = greet_bot.get_last_update()
@@ -83,19 +82,19 @@ def main():
 #            if last_chat_text.lower()in greetings:
 #                greet_bot.send_message(last_chat_id, 'Huomenta {}'.format(last_chat_name))
 
-            if last_chat_text.lower() in greetings and today == now.day and (4 <= hour < 10):
+            if last_chat_text.lower() in greetings and (4 <= hour < 10):
                 greet_bot.send_message(last_chat_id, 'Huomenta {}'.format(last_chat_name))
 
-            elif last_chat_text.lower() in greetings and today == now.day and (10 <= hour < 15):
+            elif last_chat_text.lower() in greetings and (10 <= hour < 15):
                 greet_bot.send_message(last_chat_id, 'Iltapäivää {}'.format(last_chat_name))
 
-            elif last_chat_text.lower() in greetings and today == now.day and (15 <= hour < 21):
+            elif last_chat_text.lower() in greetings and (15 <= hour < 21):
                 greet_bot.send_message(last_chat_id, 'Iltaa {}'.format(last_chat_name))
                 
-            elif last_chat_text.lower() in greetings and today == now.day and ((21 <= hour < 24) or (0 <= hour < 4)):
+            elif last_chat_text.lower() in greetings and ((21 <= hour < 24) or (0 <= hour < 4)):
                 greet_bot.send_message(last_chat_id, 'Öitä {}'.format(last_chat_name))
             elif last_chat_text.lower() == 'hyvää yötä botti':
-                continue
+                greet_bot.send_message(last_chat_id, 'Hyvää yötä, {}'.format(last_chat_name))
 
             if (msgtimenew - msgtimeold) < 30:
                 msgpermin += 1
