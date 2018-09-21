@@ -1,4 +1,4 @@
-﻿# Tuodaan tarvittavat osat
+﻿# Tuodaan tarvittavat osat.
 import os
 import datetime
 try:
@@ -8,7 +8,7 @@ except ImportError:
     print("Ongelma requests-moduulin noudossa.")
 
 
-# InOut hakee päivitykset
+# InOut hakee viestipäivitykset sekä lähettää uudet viestit.
 class InOut:
 
     def __init__(self, token):
@@ -40,36 +40,63 @@ class InOut:
         return last_update
 
 
-# Token on botin tunnus. Sitä säilytetään Herokussa sovelluksen muuttujana. Noudetaan se.
-token = os.environ['token_heroku']
+# Greet hoitaa erilaisiin tervehdyksiin reagoimisen.
+def greet(last_greet):
+    now = datetime.datetime.now()
+    hour = now.hour
+    minute = now.minute
+    print(hour)
+    print(minute)
+    if last_greet.lower() == 'hyvää yötä botti':
+        return 'Hyvää yötä,'
+    elif last_greet.lower() and (4 <= hour < 10):
+        return 'Huomenta'
 
-greet_bot = InOut(token)
+    elif last_greet.lower() and (10 <= hour < 15):
+        return 'Iltapäivää'
+
+    elif last_greet.lower() and (15 <= hour < 21):
+        return 'Iltaa'
+
+    elif last_greet.lower() and ((21 <= hour < 24) or (0 <= hour < 4)):
+        return 'Öitä'
+    elif last_greet.lower() == 'hyvää yötä botti':
+        return 'Hyvää yötä,'
+
+
+# Token on botin tunnus. Sitä säilytetään Herokussa sovelluksen muuttujana. Noudetaan se.
+# token = os.environ['token_heroku']
+token = "627376930:AAEGGErL9-IWJ_bWSAVMvUpoJKoevrBMSe4"
+
+# Alustus.
+bot = InOut(token)
+# Botti vastaa seuraaviin tervehdyksiin.
 greetings = ('terve!', 'hei!', 'morjens!', 'moro!', 'huomenta!', 'päivää!', 'iltaa!', 'hyvää päivää!', 'hei', 'moi!',
-             'hyvää yötä botti')
-now = datetime.datetime.now()
+             'hyvää yötä', 'hyvää yötä botti')
 
 
 def main():
 
     new_offset = None
-    today = now.day
-    hour = now.hour
     sticker_amount = 0
     msgtimeold = 0
     msgpermin = 0
 
+    # Laitetaan botti hakemaan viestipäivityksiä ja reagoimaan niihin.
     while True:
-        greet_bot.get_updates(new_offset)
+        bot.get_updates(new_offset)
 
-        last_update = greet_bot.get_last_update()
+        last_update = bot.get_last_update()
         last_update_id = 0
 
+        # Botin täytyy huomioida tilanteet, joissa uusia viestejä ei ole tullut.
         if len(last_update) > 0:
             last_update_id = last_update['update_id']
             last_chat_id = last_update['message']['chat']['id']
             last_chat_name = last_update['message']['from']['first_name']
             msgtimenew = last_update['message']['date']
 
+            # Botin täytyy selviytyä eri sisältöisistä viesteistä.
             try:
                 last_chat_text = last_update['message']['text']
             except KeyError:
@@ -79,43 +106,33 @@ def main():
             except KeyError:
                 last_chat_sticker = []
 
-            
-#            if last_chat_text.lower()in greetings:
-#                greet_bot.send_message(last_chat_id, 'Huomenta {}'.format(last_chat_name))
+            # Botin reagointi tervehdyksiin.
+            if last_chat_text.lower() in greetings:
+                greet_back = greet(last_chat_text)
+                bot.send_message(last_chat_id, '{} {}'.format(greet_back, last_chat_name))
 
-            if last_chat_text.lower() in greetings and today == now.day and (4 <= hour < 10):
-                greet_bot.send_message(last_chat_id, 'Huomenta {}'.format(last_chat_name))
-
-            elif last_chat_text.lower() in greetings and today == now.day and (10 <= hour < 15):
-                greet_bot.send_message(last_chat_id, 'Iltapäivää {}'.format(last_chat_name))
-
-            elif last_chat_text.lower() in greetings and today == now.day and (15 <= hour < 21):
-                greet_bot.send_message(last_chat_id, 'Iltaa {}'.format(last_chat_name))
-                
-            elif last_chat_text.lower() in greetings and today == now.day and ((21 <= hour < 24) or (0 <= hour < 4)):
-                greet_bot.send_message(last_chat_id, 'Öitä {}'.format(last_chat_name))
-            elif last_chat_text.lower() == 'hyvää yötä botti':
-                continue
-
+            # Kun keskustelu käy kiivaana, botti rauhoittelee.
             if (msgtimenew - msgtimeold) < 30:
                 msgpermin += 1
                 msgtimeold = msgtimenew
                 if msgpermin == 15:
-                    greet_bot.send_message(last_chat_id, 'Rauhoittukaa, herranen aika!')
+                    bot.send_message(last_chat_id, 'Rauhoittukaa, herranen aika!')
                     msgpermin = 0
             else:
                 msgtimeold = msgtimenew
                 msgpermin = 0
 
+            # Jos stickereitä lähetetään useampi, botti kannustaa.
             if len(last_chat_sticker) > 2:
                 sticker_amount += 1
                 if sticker_amount == 10:
-                    greet_bot.send_message(last_chat_id, 'Niin hyviä meemitarroja!')
+                    bot.send_message(last_chat_id, 'Niin hyviä meemitarroja!')
                     sticker_amount = 0
 
         new_offset = last_update_id + 1
 
 
+# Ohjelman suoritus pythonissa saaadaan katkaistua painamalla ctrl+c.
 if __name__ == '__main__':
     try:
         main()
