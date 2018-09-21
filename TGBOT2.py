@@ -65,8 +65,7 @@ def greet(last_greet):
 
 
 # Token on botin tunnus. Sitä säilytetään Herokussa sovelluksen muuttujana. Noudetaan se.
-# token = os.environ['token_heroku']
-token = "627376930:AAEGGErL9-IWJ_bWSAVMvUpoJKoevrBMSe4"
+token = os.environ['token_heroku']
 
 # Alustus.
 bot = InOut(token)
