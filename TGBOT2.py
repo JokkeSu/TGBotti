@@ -40,6 +40,7 @@ class InOut:
         return last_update
 
 
+<<<<<<< HEAD
 # Greet hoitaa erilaisiin tervehdyksiin reagoimisen.
 def greet(last_greet):
     now = datetime.datetime.now()
@@ -50,6 +51,11 @@ def greet(last_greet):
     if last_greet.lower() == 'hyvää yötä botti':
         return 'Hyvää yötä,'
     elif last_greet.lower() and (4 <= hour < 10):
+=======
+def greet(last_greet):
+    hour = now.hour
+    if last_greet.lower() and (4 <= hour < 10):
+>>>>>>> 1cc7785f5a7cbab3eb5bee8e6f41fab860b85ca6
         return 'Huomenta'
 
     elif last_greet.lower() and (10 <= hour < 15):
@@ -67,11 +73,18 @@ def greet(last_greet):
 # Token on botin tunnus. Sitä säilytetään Herokussa sovelluksen muuttujana. Noudetaan se.
 token = os.environ['token_heroku']
 
+<<<<<<< HEAD
 # Alustus.
 bot = InOut(token)
 # Botti vastaa seuraaviin tervehdyksiin.
 greetings = ('terve!', 'hei!', 'morjens!', 'moro!', 'huomenta!', 'päivää!', 'iltaa!', 'hyvää päivää!', 'hei', 'moi!',
              'hyvää yötä', 'hyvää yötä botti')
+=======
+bot = InOut(token)
+greetings = ('terve!', 'hei!', 'morjens!', 'moro!', 'huomenta!', 'päivää!', 'iltaa!', 'hyvää päivää!', 'hei', 'moi!',
+             'hyvää yötä')
+now = datetime.datetime.now()
+>>>>>>> 1cc7785f5a7cbab3eb5bee8e6f41fab860b85ca6
 
 
 def main():
@@ -105,10 +118,34 @@ def main():
             except KeyError:
                 last_chat_sticker = []
 
+<<<<<<< HEAD
             # Botin reagointi tervehdyksiin.
             if last_chat_text.lower() in greetings:
                 greet_back = greet(last_chat_text)
                 bot.send_message(last_chat_id, '{} {}'.format(greet_back, last_chat_name))
+=======
+            if last_chat_text.lower() in greetings:
+                greet_back = greet(last_chat_text)
+                bot.send_message(last_chat_id, '{} {}'.format(greet_back, last_chat_name))
+
+
+#            if last_chat_text.lower()in greetings:
+#                greet_bot.send_message(last_chat_id, 'Huomenta {}'.format(last_chat_name))
+
+#            if last_chat_text.lower() in greetings and (4 <= hour < 10):
+#                greet_bot.send_message(last_chat_id, 'Huomenta {}'.format(last_chat_name))
+
+#            elif last_chat_text.lower() in greetings and (10 <= hour < 15):
+#                greet_bot.send_message(last_chat_id, 'Iltapäivää {}'.format(last_chat_name))
+
+#            elif last_chat_text.lower() in greetings and (15 <= hour < 21):
+#                greet_bot.send_message(last_chat_id, 'Iltaa {}'.format(last_chat_name))
+                
+#            elif last_chat_text.lower() in greetings and ((21 <= hour < 24) or (0 <= hour < 4)):
+#                greet_bot.send_message(last_chat_id, 'Öitä {}'.format(last_chat_name))
+#            elif last_chat_text.lower() == 'hyvää yötä botti':
+#                greet_bot.send_message(last_chat_id, 'Hyvää yötä, {}'.format(last_chat_name))
+>>>>>>> 1cc7785f5a7cbab3eb5bee8e6f41fab860b85ca6
 
             # Kun keskustelu käy kiivaana, botti rauhoittelee.
             if (msgtimenew - msgtimeold) < 30:
