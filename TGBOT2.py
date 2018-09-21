@@ -45,7 +45,7 @@ token = os.environ['token_heroku']
 
 greet_bot = InOut(token)
 greetings = ('terve!', 'hei!', 'morjens!', 'moro!', 'huomenta!', 'päivää!', 'iltaa!', 'hyvää päivää!', 'hei', 'moi!',
-             'hyvää yötä botti')
+             'hyvää yötä')
 now = datetime.datetime.now()
 
 
