@@ -12,7 +12,7 @@ except ImportError:
 
 app = Flask(__name__)
 TOKEN = os.environ['token_heroku']
-SECRET = 'bot' + TOKEN
+SECRET = '/bot' + TOKEN
 URL = os.environ['url_heroku']
 
 
